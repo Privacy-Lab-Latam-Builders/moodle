@@ -15,4 +15,10 @@ $observers = [
         'includefile' => '/local/course_webhook/classes/observer.php', // File containing the observer class.
         'internal'    => false,
     ],
+    [
+        'eventname'   => '\mod_survey\event\course_module_viewed', // Event for user view at first time a course.
+        'callback'    => '\local_course_webhook\observer::course_module_viewed', // Method to call.
+        'includefile' => '/local/course_webhook/classes/observer.php', // File containing the observer class.
+        'internal'    => false,
+    ],
 ];
