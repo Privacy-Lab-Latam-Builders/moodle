@@ -13,5 +13,5 @@
  $plugin->component = 'local_course_webhook'; // Plugin name.
  $plugin->version = 2024110100;               // Version of the plugin (YYYYMMDDXX).
  $plugin->requires = 2022112800;              // Moodle 4.1 or later.
- $plugin->maturity = MATURITY_STABLE;
+ $plugin->maturity = MATURITY_ALPHA;
  $plugin->release = '1.0';
