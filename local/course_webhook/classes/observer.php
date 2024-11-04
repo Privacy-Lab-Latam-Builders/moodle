@@ -33,7 +33,7 @@ class observer {
         $postData = json_encode($data);
 
         // Set up cURL to send the POST request.
-        $ch = curl_init('http://52.23.242.161:3000/courses/create');
+        $ch = curl_init('http://' . $moodle_middleware_host .'/courses/create');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         curl_setopt($ch, CURLOPT_POST, true);
@@ -88,7 +88,7 @@ class observer {
         $postData = json_encode($data);
 
         // Set up cURL to send the POST request.
-        $ch = curl_init('http://52.23.242.161:3000/courses/event');
+        $ch = curl_init('http://' . $moodle_middleware_host .'/courses/event');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         curl_setopt($ch, CURLOPT_POST, true);
@@ -142,7 +142,7 @@ class observer {
         $postData = json_encode($data);
 
         // Set up cURL to send the POST request.
-        $ch = curl_init('http://52.23.242.161:3000/courses/event');
+        $ch = curl_init('http://' . $moodle_middleware_host .'/courses/event');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         curl_setopt($ch, CURLOPT_POST, true);
@@ -196,7 +196,7 @@ class observer {
         $postData = json_encode($data);
 
         // Set up cURL to send the POST request.
-        $ch = curl_init('http://52.23.242.161:3000/courses/event');
+        $ch = curl_init('http://' . $moodle_middleware_host .'/courses/event');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         curl_setopt($ch, CURLOPT_POST, true);
@@ -250,7 +250,7 @@ class observer {
         $postData = json_encode($data);
 
         // Set up cURL to send the POST request.
-        $ch = curl_init('http://52.23.242.161:3000/courses/event');
+        $ch = curl_init('http://' . $moodle_middleware_host .'/courses/event');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         curl_setopt($ch, CURLOPT_POST, true);
