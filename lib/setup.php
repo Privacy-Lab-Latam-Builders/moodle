@@ -1125,7 +1125,7 @@ if (PHPUNIT_TEST) {
     // 192.168 subnet is an entry in blocked list
     // 192.168.1.1 is allowed in allowed list
     // This ip will be allowed finally
-    if (!empty($CFG->blockedip)) {
+    /*if (!empty($CFG->blockedip)) {
         if (remoteip_in_list($CFG->blockedip)) {
             // if the allowed ip list is not empty
             // IPs are not included in the allowed list will be
@@ -1145,7 +1145,7 @@ if (PHPUNIT_TEST) {
         if (!remoteip_in_list($CFG->allowedip)) {
             die(get_string('ipblocked', 'admin'));
         }
-    }
+    }*/
 
 }
 

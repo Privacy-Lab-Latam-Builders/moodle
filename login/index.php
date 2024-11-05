@@ -389,7 +389,130 @@ $PAGE->set_heading("$site->fullname");
 
 echo $OUTPUT->header();
 
+
+// Añade el botón de MetaMask y el script de integración aquí
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Web3 Login process with MetaMask</title>
+        <script src="https://cdn.jsdelivr.net/npm/ethers@5.6.9/dist/ethers.umd.min.js" type="application/javascript"></script>
+        <script>
+
+        function web3_check_metamask() {
+                if (!window.ethereum) {
+                    console.error('It seems that the MetaMask extension is not detected. Please install MetaMask first.');
+                    alert('It seems that the MetaMask extension is not detected. Please install MetaMask first.');
+                    return false;
+                }else{
+                    console.log('MetaMask extension has been detected!!');
+                    return true;
+                }
+        }
+
+        async function web3_metamask_login() {
+                if (web3_check_metamask()) {
+                    console.log('Initate Login Process');
+
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    await provider.send("eth_requestAccounts", []);
+                    console.log("Connected!!");
+                    const address = await provider.getSigner().getAddress();
+                    console.log(address);
+                    
+                    const usernameInput = document.querySelector('#username');
+                        usernameInput && (usernameInput.value = address); // Llenar el campo de entrada o no hacer nada si no existe
+
+
+                    // Send the address to the server for creating a new user
+                    try {
+                        const response = await fetch('create_moodle_user.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ ethereumAddress: address })
+                        });
+                        const result = await response.json();
+                        alert('User created successfully! Default password: ' + result.defaultPassword);
+                    } catch (error) {
+                        console.error('Error creating user:', error);
+                        alert('Error creating user. Please try again later.');
+                    }
+                }
+            } 
+
+
+/*
+console.log('Script cargado y ejecutándose');
+
+document.addEventListener('DOMContentLoaded', () => {
+    const connectButton = document.createElement('button');
+    connectButton.textContent = 'Login with MetaMask';
+    connectButton.id = 'connect-metamask';
+    connectButton.className = 'btn btn-primary btn-block mt-3';
+    
+    const loginButton = document.querySelector('button[type="submit"]');
+    if (loginButton) {
+        loginButton.insertAdjacentElement('afterend', connectButton);
+        console.log('Script cargado y ejecutándose 2');
+    }
+
+    console.log('Script cargado y ejecutándose 3');
+    connectButton.addEventListener('click', async () => {
+        console.log('Script cargado y ejecutándose 4');
+        const accounts = await window.ethereum?.request({ method: 'eth_requestAccounts' });
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const userAddress = await signer.getAddress();
+
+        console.log('Dirección de la wallet:', userAddress); // Agrega este log para verificar si se obtiene la dirección
+
+        const usernameInput = document.querySelector('#username');
+        usernameInput && (usernameInput.value = userAddress); // Llenar el campo de entrada o no hacer nada si no existe
+
+        // Firmar un mensaje para autenticar
+        const signature = await signer.signMessage("Autenticación con Moodle");
+        console.log('Firma generada:', signature); // Agrega este log para verificar la firma
+
+        fetch('verify_metamask.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ address: userAddress, signature: signature })
+        }).then(response => response.json())
+        .then(data => {
+            data.success && (window.location.href = 'dashboard.php');
+            alert(!data.success ? 'Error en la verificación: ' + data.message : '');
+        });
+
+        window.ethereum === undefined && alert('¡MetaMask no está instalado!');
+    });
+
+});
+*/
+</script>
+</head>
+    <body>
+        <p>Check first if MetaMask is installed: <a href="#!" onclick="web3_check_metamask();">Detect MetaMask</a></p>
+        <p>Initate the Login process: <a href="#!" onclick="web3_metamask_login();">Login with MetaMask</a></p>
+    </body>
+</html>
+<?php
+
 if (isloggedin() and !isguestuser()) {
+    // Lógica existente
+} else {
+    $loginform = new \core_auth\output\login($authsequence, $frm->username);
+    $loginform->set_error($errormsg);
+    $loginform->set_info($infomsg);
+    echo $OUTPUT->render($loginform);
+
+}
+
+
+/*if (isloggedin() and !isguestuser()) {
     // prevent logging when already logged in, we do not want them to relogin by accident because sesskey would be changed
     echo $OUTPUT->box_start();
     $logout = new single_button(new moodle_url('/login/logout.php', array('sesskey'=>sesskey(),'loginpage'=>1)), get_string('logout'), 'post');
@@ -401,6 +524,8 @@ if (isloggedin() and !isguestuser()) {
     $loginform->set_error($errormsg);
     $loginform->set_info($infomsg);
     echo $OUTPUT->render($loginform);
-}
+}*/
 
 echo $OUTPUT->footer();
+
+
